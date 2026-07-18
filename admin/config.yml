@@ -2,6 +2,8 @@ backend:
   name: github
   branch: main
   repo: Zack-kodo/Asmaa-Salon
+  auth_type: pkce
+  app_id: Ov23liurfQhowWeQqCyP
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
