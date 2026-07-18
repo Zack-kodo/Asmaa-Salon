@@ -1,0 +1,40 @@
+backend:
+  name: github
+  branch: main
+  repo: Zack-kodo/Asmaa-Salon
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "settings"
+    label: "إعدادات الموقع"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - file: "_data/settings.json"
+        name: "site_settings"
+        label: "إعدادات الصالون"
+        fields:
+          - { label: "اسم الصالون", name: "title", widget: "string", default: "BEAUTYSALON" }
+          - { label: "العنوان الفرعي", name: "subtitle", widget: "string", default: "🎁 عرض خاص" }
+          - { label: "الوصف", name: "description", widget: "text", default: "صالون تجميل نسائي متخصص فالمانيكير، البيدكير، والميكاب." }
+          - { label: "رقم الواتساب", name: "whatsapp", widget: "string", default: "212600000000" }
+          - { label: "رابط Google Forms", name: "form_link", widget: "string", default: "https://forms.gle/VOTRE_LIEN" }
+          - label: "اللون الرئيسي"
+            name: "main_color"
+            widget: "color"
+            default: "#fa9dbc"
+          - label: "اللون الثانوي"
+            name: "second_color"
+            widget: "color"
+            default: "#fdd304"
+          - label: "اللون الثالث"
+            name: "third_color"
+            widget: "color"
+            default: "#41f095"
+          - { label: "رابط Instagram", name: "instagram", widget: "string", default: "https://instagram.com" }
+          - { label: "رابط Facebook", name: "facebook", widget: "string", default: "https://facebook.com" }
+          - { label: "رابط Google Maps", name: "location", widget: "string", default: "https://maps.google.com/?q=Casablanca+Maroc" }
+          - { label: "ساعات العمل", name: "hours", widget: "text", default: "الإثنين - الجمعة: 9:00 - 19:00" }
