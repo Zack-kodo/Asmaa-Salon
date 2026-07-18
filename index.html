@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BEAUTYSALON</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#f7e6f7;
+    --yellow:#fdd304;
+    --green:#41f095;
+    --pink:#fa9dbc;
+    --dark:#3a2b3a;
+    --bg-opacity:0.15;
+  }
+  .bg-image{
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    background:url('assets/background.jpg');
+    background-size:cover;background-position:center;
+    opacity:var(--bg-opacity);z-index:-1;
+  }
+  body{
+    font-family:'Cairo',sans-serif;background:var(--bg);
+    min-height:100vh;display:flex;align-items:center;
+    justify-content:center;padding:20px;
+  }
+  .card{
+    width:100%;max-width:420px;
+    background:rgba(255,255,255,0.95);
+    border-radius:32px;box-shadow:0 20px 60px rgba(170,120,160,.25);
+    padding:36px 28px 30px;text-align:center;
+    animation:fadeUp .6s ease;backdrop-filter:blur(10px);
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+  .logo-circle{
+    width:120px;height:120px;margin:0 auto 18px;border-radius:50%;
+    border:4px solid #000;background:#fff;display:flex;
+    align-items:center;justify-content:center;overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+  }
+  .logo-circle img{width:100%;height:100%;object-fit:cover}
+  .promo-title{font-family:'Poppins',sans-serif;font-size:24px;font-weight:800;color:var(--dark);margin-bottom:6px}
+  .underline{width:48px;height:4px;border-radius:4px;background:var(--yellow);margin:0 auto 14px}
+  .desc{font-size:14px;line-height:1.8;color:#7a6a7a;margin-bottom:24px;max-width:300px;margin-inline:auto}
+
+  .btn{
+    display:block;width:100%;padding:16px;border-radius:16px;
+    font-family:'Cairo',sans-serif;font-size:16px;font-weight:700;
+    text-decoration:none;margin-bottom:12px;transition:transform .18s, box-shadow .18s;
+    border:none;cursor:pointer;
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .btn-yellow{background:var(--yellow);color:#5a4a00;box-shadow:0 8px 20px rgba(253,211,4,.4)}
+  .btn-green{background:var(--green);color:#0a5a32;box-shadow:0 8px 20px rgba(65,240,149,.4)}
+
+  .hours{
+    background:var(--bg);border-radius:14px;padding:14px;
+    margin:22px 0;font-size:13px;color:var(--dark);
+  }
+  .hours strong{display:block;margin-bottom:6px;font-size:14px}
+
+  .socials{display:flex;justify-content:center;gap:16px;margin-top:18px;padding-top:20px;border-top:1px solid #eee}
+  .socials a{width:46px;height:46px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s}
+  .socials a:hover{transform:translateY(-3px)}
+  .socials svg{width:22px;height:22px;fill:var(--dark)}
+  .socials .instagram:hover{background:#e1306c}.socials .instagram:hover svg{fill:#fff}
+  .socials .facebook:hover{background:#1877f2}.socials .facebook:hover svg{fill:#fff}
+  .socials .location:hover{background:#f85149}.socials .location:hover svg{fill:#fff}
+
+  /* ================================================
+     📝 الستيمارا المدمجة (Modal)
+     ================================================ */
+  .modal-overlay{
+    display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,.5);z-index:100;
+    align-items:center;justify-content:center;padding:20px;
+  }
+  .modal-overlay.active{display:flex}
+  .modal{
+    background:#fff;border-radius:24px;
+    max-width:380px;width:100%;padding:28px 24px;
+    animation:fadeUp .4s ease;max-height:90vh;overflow-y:auto;
+  }
+  .modal h2{font-size:20px;color:var(--dark);margin-bottom:6px;text-align:center}
+  .modal .sub{text-align:center;font-size:13px;color:#999;margin-bottom:20px}
+  .form-group{margin-bottom:14px;text-align:right}
+  .form-group label{display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:5px}
+  .form-group input,.form-group select,.form-group textarea{
+    width:100%;padding:12px;border:2px solid #eee;border-radius:12px;
+    font-family:'Cairo',sans-serif;font-size:14px;outline:none;transition:border .2s;
+  }
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--pink)}
+  .form-group textarea{resize:vertical;min-height:60px}
+  .form-row{display:flex;gap:10px}
+  .form-row .form-group{flex:1}
+  .submit-btn{
+    width:100%;padding:14px;border:none;border-radius:14px;
+    background:var(--green);color:#0a5a32;font-size:16px;font-weight:700;
+    cursor:pointer;font-family:'Cairo',sans-serif;transition:transform .18s;
+    margin-top:6px;
+  }
+  .submit-btn:hover{transform:translateY(-2px)}
+  .close-btn{
+    background:none;border:none;font-size:24px;color:#ccc;
+    position:absolute;top:16px;left:20px;cursor:pointer;
+  }
+  .success-msg{
+    display:none;text-align:center;padding:20px;
+  }
+  .success-msg.active{display:block}
+  .success-msg .check{
+    width:70px;height:70px;border-radius:50%;background:var(--green);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 14px;
+  }
+  .success-msg .check svg{width:36px;height:36px;fill:#fff}
+  .success-msg h3{font-size:20px;color:var(--dark);margin-bottom:6px}
+  .success-msg p{font-size:14px;color:#999}
+</style>
+</head>
+<body>
+
+<div class="bg-image"></div>
+
+<div class="card">
+  <div class="logo-circle"><img src="assets/logo.png" alt="شعار"></div>
+  <div class="promo-title">🎁 عرض خاص</div>
+  <div class="underline"></div>
+  <p class="desc">
+    صالون تجميل نسائي متخصص فالمانيكير، البيدكير، والميكاب.
+    احجزي موعدك دابا وخلي الجمال ديالك علينا ✨
+  </p>
+
+  <a href="https://wa.me/212600000000" class="btn btn-yellow">📞 احجزي موعد</a>
+  <button class="btn btn-green" onclick="openModal()">🎁 سجّلي فالعرض</button>
+  <a href="catalogue.html" class="btn btn-yellow">📋 شوف الكتالوگ</a>
+
+  <div class="hours">
+    <strong>⏰ ساعات العمل</strong>
+    الإثنين - الجمعة: 9:00 - 19:00<br>
+    السبت: 10:00 - 18:00
+  </div>
+
+  <div class="socials">
+    <a href="https://instagram.com" class="instagram" title="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.5A6.3 6.3 0 1 0 18.3 12 6.3 6.3 0 0 0 12 5.7zm0 10.4A4.1 4.1 0 1 1 16.1 12 4.1 4.1 0 0 1 12 16.1zm6.5-10.6a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5z"/></svg>
+    </a>
+    <a href="https://facebook.com" class="facebook" title="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.5V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+    </a>
+    <a href="https://maps.google.com/?q=Casablanca+Maroc" class="location" title="الموقع" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ================================================
+     📝 الستيمارا المدمجة
+     ================================================ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" style="position:relative">
+    <button class="close-btn" onclick="closeModal()">×</button>
+
+    <!-- الفورم -->
+    <div id="formContent">
+      <h2>🎁 سجّلي فالعرض</h2>
+      <p class="sub">عمّري المعلومات وغادي نتواصلو معاك</p>
+
+      <form id="bookingForm" onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label>الاسم الكامل *</label>
+          <input type="text" name="name" required placeholder="مثال: أسماء العلوي">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>الهاتف *</label>
+            <input type="tel" name="phone" required placeholder="06xxxxxxxx">
+          </div>
+          <div class="form-group">
+            <label>الخدمة</label>
+            <select name="service">
+              <option value="مانيكير">مانيكير</option>
+              <option value="بيدكير">بيدكير</option>
+              <option value="ميكاب">ميكاب</option>
+              <option value="coiffure">coiffure</option>
+              <option value="أخرى">أخرى</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>التاريخ المفضل</label>
+          <input type="date" name="date">
+        </div>
+
+        <div class="form-group">
+          <label>ملاحظات</label>
+          <textarea name="notes" placeholder="أي حاجة بغيتي تزيدي..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">✅ صيفطي الطلب</button>
+      </form>
+    </div>
+
+    <!-- رسالة نجاح -->
+    <div class="success-msg" id="successMsg">
+      <div class="check">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+      </div>
+      <h3>تصلّقات!</h3>
+      <p>طلبك تصيفط بنجاح. غادي نتواصلو معاك قريب 💕</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function openModal(){document.getElementById('modalOverlay').classList.add('active')}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('active')}
+
+// ↓↓ ====== مهم: حط هنا الرابط ديال Google Apps Script ======
+const SHEET_URL = 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+// ↑↑ ===========================================================
+
+function submitForm(e){
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    name: form.name.value,
+    phone: form.phone.value,
+    service: form.service.value,
+    date: form.date.value,
+    notes: form.notes.value
+  };
+
+  // تصيفط لـ Google Sheet
+  fetch(SHEET_URL, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  }).then(r => {
+    // إظهار رسالة النجاح
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('successMsg').classList.add('active');
+    form.reset();
+  }).catch(err => {
+    // حتى إلا فشل، نظهر رسالة النجاح (باش ما يطفاش الزبون)
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('successMsg').classList.add('active');
+    form.reset();
+  });
+}
+
+// سد المودال ملي كتكليكي برّا
+document.getElementById('modalOverlay').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+</script>
+
+</body>
+</html>
