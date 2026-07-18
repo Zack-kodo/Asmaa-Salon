@@ -2,8 +2,15 @@ backend:
   name: github
   branch: main
   repo: Zack-kodo/Asmaa-Salon
-  auth_type: pkce
+  base_url: https://bitter-glitter-92bf.gfi-zakaria.workers.dev
+  auth_endpoint: /auth
   app_id: Ov23liurfQhowWeQqCyP
+  commit_messages:
+    create: 'Create from CMS'
+    update: 'Update from CMS'
+    delete: 'Delete from CMS'
+    uploadMedia: 'Upload media from CMS'
+    deleteMedia: 'Delete media from CMS'
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
